@@ -1,5 +1,4 @@
 ```mermaid
-
 graph TB
     %% Input Layer
     Input["Original Input<br/>[batch, 2304_features, patches]<br/>Example: 256×3²=2304 features"]
@@ -115,6 +114,14 @@ graph TB
     Flatten0 --> ADCShared
     Flatten1 --> ADCShared
     FlattenN --> ADCShared
+    
+    %% Calibration connections (showing the mismatch)
+    Flatten0 -.-> CalibrationData
+    Flatten1 -.-> CalibrationData
+    FlattenN -.-> CalibrationData
+    CalibrationData --> GlobalParams
+    GlobalParams --> ParamMismatch
+    ParamMismatch -.-> ADCShared
     
     ADCShared --> Quantized0
     ADCShared --> Quantized1
